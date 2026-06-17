@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 const slides = [
   { 
@@ -19,6 +19,7 @@ const slides = [
 ];
 
 const currentSlide = ref(0);
+const slide = computed(() => slides[currentSlide.value]!);
 let slideInterval: any = null;
 
 const nextSlide = () => {
@@ -68,8 +69,8 @@ onUnmounted(() => {
         <div class="container slide-content">
           <transition name="fade-slide" mode="out-in">
             <div :key="currentSlide" class="text-content">
-              <h2>{{ slides[currentSlide].title }}</h2>
-              <p>{{ slides[currentSlide].subtitle }}</p>
+              <h2>{{ slide.title }}</h2>
+              <p>{{ slide.subtitle }}</p>
               <!-- Arrow symbol on the right side based on image -->
               <div class="arrow-right">›</div>
             </div>
@@ -80,7 +81,7 @@ onUnmounted(() => {
             <!-- Left: Action Button -->
             <transition name="fade-slide" mode="out-in">
               <button :key="currentSlide" class="btn-read-more">
-                {{ slides[currentSlide].action }}
+                {{ slide.action }}
               </button>
             </transition>
             

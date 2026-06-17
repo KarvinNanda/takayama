@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 const slides = [
   { id: 1, image: 'https://placehold.co/1200x800/1C3609/FFFFFF?text=Hero+Image+1', title: 'Play Padel at\na Higher Standard.', subtitle: 'Premium courts. Curated community.\nElevated experience.', action: 'Get to know more' },
@@ -7,6 +7,7 @@ const slides = [
 ];
 
 const currentSlide = ref(0);
+const slide = computed(() => slides[currentSlide.value]!);
 let slideInterval: any = null;
 
 const nextSlide = () => {
@@ -55,10 +56,10 @@ onUnmounted(() => {
         <div class="hero-text">
           <transition name="fade-slide" mode="out-in">
             <div :key="currentSlide" class="text-content">
-              <h1>{{ slides[currentSlide].title }}</h1>
-              <p>{{ slides[currentSlide].subtitle }}</p>
+              <h1>{{ slide.title }}</h1>
+              <p>{{ slide.subtitle }}</p>
               <button class="text-btn">
-                {{ slides[currentSlide].action }} 
+                {{ slide.action }}
                 <span class="arrow">›</span>
               </button>
             </div>
